@@ -1,7 +1,7 @@
 <template>
   <div class="EventDetails">
 
-
+    this is the event details page
   </div>
 </template>
 

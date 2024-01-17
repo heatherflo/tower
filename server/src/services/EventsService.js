@@ -26,13 +26,13 @@ class EventsService {
   async editEventById(eventId, eventData) {
     const originalEvent = await this.getEventById(eventId)
 
-    originalEvent.name != eventData.name ? eventData.name : originalEvent.name
+    originalEvent.name = eventData.name ? eventData.name : originalEvent.name
     originalEvent.description = eventData.description ? eventData.description : originalEvent.description
     originalEvent.coverImg = eventData.coverImg ? eventData.coverImg : originalEvent.coverImg
     originalEvent.location = eventData.location ? eventData.location : originalEvent.location
     originalEvent.capacity = eventData.capacity ? eventData.capacity : originalEvent.capacity
     originalEvent.startDate = eventData.startDate ? eventData.startDate : originalEvent.startDate
-    originalEvent.isCanceled = eventData.isCanceled ? eventData.isCanceled : originalEvent.isCanceled
+
     originalEvent.type = eventData.type ? eventData.type : originalEvent.type
 
     await originalEvent.save()

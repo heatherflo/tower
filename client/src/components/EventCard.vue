@@ -1,9 +1,12 @@
 <template>
-  <div class="EventCard card rounded">
-    <!-- {{ event.name }} -->
-    <img :src="event.coverImg" :alt="event.name">
-    {{ event.name }}
-  </div>
+  <RouterLink :to="{ path: `/eventDetails/${eventId}` }">
+    <div class="EventCard card rounded selectable">
+      <!-- {{ event.name }} -->
+      <img :src="event.coverImg" :alt="event.name">
+      {{ event.name }}
+    </div>
+
+  </RouterLink>
 </template>
 
 
@@ -11,12 +14,14 @@
 import { AppState } from '../AppState';
 import { computed, ref, onMounted } from 'vue';
 import { Event } from '../models/Event'
+import { RouterLink } from 'vue-router';
 
 export default {
   props: { event: { type: Event, required: true } },
   setup() {
-    return {}
-  }
+    return {};
+  },
+  components: { RouterLink }
 };
 </script>
 
