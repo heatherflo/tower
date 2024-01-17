@@ -32,13 +32,15 @@
 
         </section>
       </div>
-      {{ events }}
+
 
     </section>
     <!-- showing off all the events   -->
     <div class="container">
-      <section class="row" v-for="event in events" :key="event.id">
-        <EventCard :event="event" />
+      <section class="row">
+        <div class="col-12 col-md-3" v-for="event in events" :key="event">
+          <EventCard :event="event" />
+        </div>
       </section>
 
     </div>
