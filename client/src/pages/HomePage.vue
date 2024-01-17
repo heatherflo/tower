@@ -76,7 +76,7 @@ export default {
       getAllEvents,
       events: computed(() => {
         if (filterBy.value) {
-          return AppState.events.filter(a => a.category == filterBy.value);
+          return AppState.events.filter(a => a.type == filterBy.value);
         }
         else {
           return AppState.events;
