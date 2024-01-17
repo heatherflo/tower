@@ -4,8 +4,8 @@
 
       <div class="col-12 my-2 "
         :style="{ backgroundImage: 'url(\'https://media.istockphoto.com/id/1457593188/photo/sunny-autumn-day-at-beautiful-mountain-lake.jpg?s=1024x1024&w=is&k=20&c=V_fNzR1iGDTNRcXmmBviF9aD_lGW6UenqbHZ70GLCko=\')', height: '65vh', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'top' }">
-        <!-- TODO make the text go to the bottom of the image on the left -->
-        <div class=" d-flex flex-column align-items-start justify-content-end">
+
+        <div class=" d-flex text-box flex-column align-items-start justify-content-end">
           <h3 class="text-dark">real events</h3>
           <h3 class="text-dark">real people</h3>
           <h3 class="text-dark">real fun</h3>
@@ -92,4 +92,8 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.text-box {
+  height: 65vh;
+}
+</style>

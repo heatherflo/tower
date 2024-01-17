@@ -6,7 +6,7 @@
     <router-view />
   </main>
   <footer class=" p-2 d-flex bg-info text-dark">
-    Made by REAL people: TOWER
+    Made by REAL people at TOWER
     <div class="">
       <i><i class=" m-2 mdi mdi-facebook"></i></i><i><i class="m-2 mdi mdi-instagram"></i></i><i><i
           class="m-2 mdi mdi-linkedin"></i></i>

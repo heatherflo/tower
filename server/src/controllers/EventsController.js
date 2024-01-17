@@ -23,7 +23,7 @@ export class EventsController extends BaseController {
       const userId = request.userInfo.id
       eventData.creatorId = userId
       const event = await eventsService.createEvent(eventData)
-      response.send([event, eventData])
+      response.send(event)
     } catch (error) {
       next(error)
     }
@@ -53,7 +53,7 @@ export class EventsController extends BaseController {
       const eventId = request.params.eventId
       const userId = request.userInfo.id
       const eventData = response.body
-      const event = await eventsService.editEventById(eventId, eventData)
+      const event = await eventsService.editEventById(eventData, eventId)
       response.send(event)
 
     } catch (error) {

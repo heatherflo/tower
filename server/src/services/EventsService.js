@@ -22,17 +22,25 @@ class EventsService {
     }
     return event
   }
-  // TODO see what is wrong with this function to make my test work correctly in Postman
+  // TODO see what is wrong with this function to make my test work correctly in Postman- may be as a result of the fact that the other things are not passing first in postman
   async editEventById(eventId, eventData) {
-    const event = (await (await dbContext.Events.findById(eventId)).populate('creator', 'name picture', eventData))
-    if (!event) {
-      throw new BadRequest(`Cannot edit: ${eventId}`)
-    }
+    const originalEvent = await this.getEventById(eventId)
 
-    await event.save()
-    return event
+    originalEvent.name != eventData.name ? eventData.name : originalEvent.name
+    originalEvent.description = eventData.description ? eventData.description : originalEvent.description
+    originalEvent.coverImg = eventData.coverImg ? eventData.coverImg : originalEvent.coverImg
+    originalEvent.location = eventData.location ? eventData.location : originalEvent.location
+    originalEvent.capacity = eventData.capacity ? eventData.capacity : originalEvent.capacity
+    originalEvent.startDate = eventData.startDate ? eventData.startDate : originalEvent.startDate
+    originalEvent.isCanceled = eventData.isCanceled ? eventData.isCanceled : originalEvent.isCanceled
+    originalEvent.type = eventData.type ? eventData.type : originalEvent.type
+
+    await originalEvent.save()
+    return originalEvent
   }
-  // TODO make this function work so the postman won't throw an error
+
+
+  // TODO make this function work so the postman won't throw an error- see above
   async cancelEvent(eventId) {
     const eventToCancel = await this.getEventById(eventId)
     eventToCancel.isCanceled = !eventToCancel.isCanceled
