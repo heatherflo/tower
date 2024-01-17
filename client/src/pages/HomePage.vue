@@ -56,8 +56,10 @@ import { AppState } from '../AppState';
 import { logger } from '../utils/Logger';
 import EventCard from '../components/EventCard.vue';
 
+
 export default {
   setup() {
+
     const filterBy = ref('');
     onMounted(() => {
       getAllEvents();
@@ -71,6 +73,8 @@ export default {
         Pop.error(error);
       }
     }
+
+
     return {
       filterBy,
       getAllEvents,

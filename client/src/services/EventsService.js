@@ -12,6 +12,21 @@ class EventsService {
     AppState.events = response.data.map(event => new Event(event))
   }
 
+  async createEvent(eventData) {
+    AppState.activeEvent = null
+    const response = await api.get(`api/events`, eventData)
+    logger.log('creating event', response.data)
+    AppState.newEvent = new Event(response.data)
+    AppState.events.push(newEvent)
+    // TODO ask why we are returning newAlbum or newEvent here
+    return newEvent
+  }
+  async getEventById(eventId) {
+    const response = await (`api/events/${eventId}`)
+    logger.log('getting event by Id', response.data)
+    AppState.activeEvent = new Event(response.data)
+  }
+
 }
 
 export const eventsService = new EventsService()
