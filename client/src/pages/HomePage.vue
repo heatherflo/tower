@@ -15,19 +15,19 @@
       <div class="container">
         <section class="row bg-light p-3 rounded my-2 gap-2">
           <!-- 'concert', 'convention', 'sport', 'digital' -->
-          <button class="col ms-2 btn btn-outline-dark" :class="{ 'bg-info': filterBy == '' }"
+          <button class="col-12 col-md ms-2 btn btn-outline-dark" :class="{ 'bg-info': filterBy == '' }"
             @click="filterBy = ''">all</button>
 
-          <button class="col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'concert' }"
+          <button class="col-12 col-md btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'concert' }"
             @click="filterBy = 'concert'">concert</button>
 
-          <button class="col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'convention' }"
+          <button class="col-12 col-md btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'convention' }"
             @click="filterBy = 'convention'">convention</button>
 
-          <button class="col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'sport' }"
+          <button class="col-12 col-md btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'sport' }"
             @click="filterBy = 'sport'">sport</button>
 
-          <button class=" me-2 col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'digital' }"
+          <button class=" me-2 col-12 col-md btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'digital' }"
             @click="filterBy = 'digital'">digital</button>
 
         </section>
