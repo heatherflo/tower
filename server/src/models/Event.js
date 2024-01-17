@@ -1,4 +1,4 @@
-import {Schema} from "mongoose";
+import { Schema } from "mongoose";
 
 export const EventSchema = new Schema(
   {
@@ -7,9 +7,9 @@ export const EventSchema = new Schema(
     description: {type: String, required: true, maxlength: 1000},
     coverImg: {type: String, required: true, maxlength: 500},
     location: {type: String, required: true, maxlength: 50},
-    capacity: {type: Number, required: true, minlength: 3, maxlength: 2000 },
-    startDate: {type: String, required: true, maxlength: 20},
-    isCanceled: {type: Boolean, required: true, default: true},
+    capacity: {type: Number, required: true, min: 3, max: 2000 },
+    startDate: {type: Date, required: true, maxlength: 20},
+    isCanceled: {type: Boolean, required: true },
     type: {type: String, enum: ['concert', 'convention', 'sport', 'digital']}
   },
   {

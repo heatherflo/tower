@@ -38,7 +38,7 @@
     <!-- showing off all the events   -->
     <div class="container">
       <section class="row" v-for="event in events" :key="event.id">
-
+        <EventCard :event="event" />
       </section>
 
     </div>
@@ -52,19 +52,21 @@ import { eventsService } from '../services/EventsService';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { logger } from '../utils/Logger';
+import EventCard from '../components/EventCard.vue';
 
 export default {
   setup() {
-    const filterBy = ref('')
+    const filterBy = ref('');
     onMounted(() => {
-      getAllEvents()
+      getAllEvents();
     });
     async function getAllEvents() {
       try {
-        await eventsService.getAllEvents()
-        logger.log('getting events from page')
-      } catch (error) {
-        Pop.error(error)
+        await eventsService.getAllEvents();
+        logger.log('getting events from page');
+      }
+      catch (error) {
+        Pop.error(error);
       }
     }
     return {
@@ -72,14 +74,15 @@ export default {
       getAllEvents,
       events: computed(() => {
         if (filterBy.value) {
-          return AppState.events.filter(a => a.category == filterBy.value)
-        } else {
-          return AppState.events
+          return AppState.events.filter(a => a.category == filterBy.value);
+        }
+        else {
+          return AppState.events;
         }
       })
-
-    }
-  }
+    };
+  },
+  components: { EventCard }
 }
 </script>
 
