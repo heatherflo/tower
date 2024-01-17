@@ -35,7 +35,13 @@
       {{ events }}
 
     </section>
+    <!-- showing off all the events   -->
+    <div class="container">
+      <section class="row" v-for="event in events" :key="event.id">
 
+      </section>
+
+    </div>
 
   </div>
 </template>

@@ -1,14 +1,15 @@
 import { api } from "./AxiosService"
 import { logger } from "../utils/Logger"
 import { AppState } from "../AppState"
+import { Event } from "../models/Event.js"
+
 
 class EventsService {
 
   async getAllEvents() {
-    const response = api.get('api/events')
-    // TODO Coming back as empty array even though I am getting an array of objects in the response payload
+    const response = await api.get('api/events')
     logger.log('getting events from service', response.data)
-    // AppState.events = response.data.map(event => newEvent(event))
+    AppState.events = response.data.map(event => new Event(event))
   }
 
 }
