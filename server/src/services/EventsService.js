@@ -28,11 +28,18 @@ class EventsService {
     if (!event) {
       throw new BadRequest(`Cannot edit: ${eventId}`)
     }
-    // Object.assign(event, eventData)
+
     await event.save()
     return event
   }
+  // TODO make this function work so the postman won't throw an error
+  async cancelEvent(eventId) {
+    const eventToCancel = await this.getEventById(eventId)
+    eventToCancel.isCanceled = !eventToCancel.isCanceled
 
+    await eventToCancel.save()
+    return eventToCancel
+  }
 
 }
 

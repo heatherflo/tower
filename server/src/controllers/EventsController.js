@@ -13,6 +13,7 @@ export class EventsController extends BaseController {
 
       .post('', this.createEvent)
       .put('/:eventId', this.editEventById)
+      .delete('/:eventId', this.cancelEvent)
   }
 
 
@@ -22,7 +23,7 @@ export class EventsController extends BaseController {
       const userId = request.userInfo.id
       eventData.creatorId = userId
       const event = await eventsService.createEvent(eventData)
-      response.send(event)
+      response.send([event, eventData])
     } catch (error) {
       next(error)
     }
@@ -59,5 +60,16 @@ export class EventsController extends BaseController {
       next(error)
     }
 
+  }
+
+  async cancelEvent(request, response, next) {
+    try {
+      const eventId = request.params.eventId
+      const userId = request.userInfo.id
+      const event = await eventsService.cancelEvent(eventId)
+      response.send(event)
+    } catch (error) {
+      next(error)
+    }
   }
 }
