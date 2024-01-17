@@ -2,14 +2,37 @@
   <div class="container-fluid mt-3 ">
     <section class="row">
 
-      <div class="col-12 mt-3"
-        :style="{ backgroundImage: 'url(\'https://media.istockphoto.com/id/1457593188/photo/sunny-autumn-day-at-beautiful-mountain-lake.jpg?s=1024x1024&w=is&k=20&c=V_fNzR1iGDTNRcXmmBviF9aD_lGW6UenqbHZ70GLCko=\')', height: '50vh', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'top' }">
-        <h3 class="text-light text-center text-align-center">real events</h3>
-        <h3 class="text-light text-center text-align-center">real people</h3>
-        <h3 class="text-light text-center text-align-center">real fun</h3>
+      <div class="col-12 my-2 "
+        :style="{ backgroundImage: 'url(\'https://media.istockphoto.com/id/1457593188/photo/sunny-autumn-day-at-beautiful-mountain-lake.jpg?s=1024x1024&w=is&k=20&c=V_fNzR1iGDTNRcXmmBviF9aD_lGW6UenqbHZ70GLCko=\')', height: '65vh', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'top' }">
+        <!-- TODO make the text go to the bottom of the image on the left -->
+        <div class=" d-flex flex-column align-items-start justify-content-end">
+          <h3 class="text-dark">real events</h3>
+          <h3 class="text-dark">real people</h3>
+          <h3 class="text-dark">real fun</h3>
+        </div>
       </div>
+      <!-- bar for categories -->
+      <div class="container">
+        <section class="row bg-light p-3 rounded my-2 gap-2">
+          <!-- 'concert', 'convention', 'sport', 'digital' -->
+          <button class="col ms-2 btn btn-outline-dark" :class="{ 'bg-info': filterBy == '' }"
+            @click="filterBy = ''">all</button>
 
+          <button class="col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'concert' }"
+            @click="filterBy = 'concert'">concert</button>
 
+          <button class="col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'convention' }"
+            @click="filterBy = 'convention'">convention</button>
+
+          <button class="col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'sport' }"
+            @click="filterBy = 'sport'">sport</button>
+
+          <button class=" me-2 col btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'digital' }"
+            @click="filterBy = 'digital'">digital</button>
+
+        </section>
+      </div>
+      {{ events }}
 
     </section>
 
@@ -18,21 +41,40 @@
 </template>
 
 <script>
+import { computed, onMounted, ref } from 'vue';
+import { eventsService } from '../services/EventsService';
+import Pop from '../utils/Pop';
+import { AppState } from '../AppState';
+import { logger } from '../utils/Logger';
+
 export default {
   setup() {
+    const filterBy = ref('')
+    onMounted(() => {
+      getAllEvents()
+    });
+    async function getAllEvents() {
+      try {
+        await eventsService.getAllEvents()
+        logger.log('getting events from page')
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
+      filterBy,
+      getAllEvents,
+      events: computed(() => {
+        if (filterBy.value) {
+          return AppState.events.filter(a => a.category == filterBy.value)
+        } else {
+          return AppState.events
+        }
+      })
 
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
-.bg-image {
-  height: 100vh;
-  max-width: 1200px;
-  object-fit: cover;
-  object-position: center;
-  background-repeat: no-repeat;
-}
-</style>
+<style scoped lang="scss"></style>

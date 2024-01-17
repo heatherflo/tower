@@ -5,8 +5,13 @@
   <main>
     <router-view />
   </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
+  <footer class=" p-2 d-flex bg-info text-dark">
+    Made by REAL people: TOWER
+    <div class="">
+      <i><i class=" m-2 mdi mdi-facebook"></i></i><i><i class="m-2 mdi mdi-instagram"></i></i><i><i
+          class="m-2 mdi mdi-linkedin"></i></i>
+
+    </div>
   </footer>
 </template>
 
@@ -27,7 +32,7 @@ export default {
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
-:root{
+:root {
   --main-height: calc(100vh - 32px - 64px);
 }
 
