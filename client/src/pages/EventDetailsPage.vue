@@ -2,6 +2,7 @@
   <div class="EventDetails">
 
     this is the event details page
+    {{ activeEvent }}
   </div>
 </template>
 
@@ -11,6 +12,8 @@ import { useRoute } from 'vue-router';
 import { AppState } from '../AppState';
 import { computed, ref, onMounted, watchEffect } from 'vue';
 import { eventsService } from '../services/EventsService';
+import Pop from '../utils/Pop';
+
 export default {
   setup() {
     const route = useRoute();
@@ -28,6 +31,9 @@ export default {
     }
     return {
       getEventById,
+      route,
+      activeEvent: computed(() => AppState.activeEvent)
+
     }
   }
 };

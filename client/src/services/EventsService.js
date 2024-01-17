@@ -22,7 +22,7 @@ class EventsService {
     return newEvent //return album so the form can recognize the data
   }
   async getEventById(eventId) {
-    const response = await (`api/events/${eventId}`)
+    const response = await api.get(`api/events/${eventId}`)
     logger.log('getting event by Id', response.data)
     AppState.activeEvent = new Event(response.data)
   }

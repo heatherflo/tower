@@ -39,7 +39,7 @@
     <div class="container">
       <section class="row">
         <div class="col-12 col-md-3" v-for="event in events" :key="event">
-          <EventCard :event="event" />
+          <EventCard :event="event" :key="event.id" />
         </div>
       </section>
 
