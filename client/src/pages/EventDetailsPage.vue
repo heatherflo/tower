@@ -45,7 +45,9 @@
       <section class="row">
         <div class="col-12">
           <h4 class="ms-3">Comments</h4>
-          {{ comments }}
+          <div v-for="comment in comments">
+            <CommentCard :comment="comment" :key="comment.id" />
+          </div>
         </div>
 
       </section>
@@ -64,42 +66,49 @@ import { computed, ref, onMounted, watchEffect } from 'vue';
 import { eventsService } from '../services/EventsService';
 import Pop from '../utils/Pop';
 import { commentsService } from '../services/CommentsService'
+import CommentCard from '../components/CommentCard.vue';
 
 export default {
   setup() {
     const commentData = ref({});
     const route = useRoute();
+    onMounted(() => {
+
+    });
+
     watchEffect(() => {
       getEventById(),
-        route.params.eventId
-    })
+        route.params.eventId;
+
+    });
+    async function createComment() {
+      commentData.value.eventId = route.params.eventId;
+      console.log('comment value', commentData.value);
+      await commentsService.createComment(commentData.value);
+      Pop.success('comment made');
+      commentData.value = {};
+    };
     async function getEventById() {
       try {
-        await eventsService.getEventById(route.params.eventId)
-
-      } catch (error) {
-        Pop.error(error)
+        await eventsService.getEventById(route.params.eventId);
       }
-
+      catch (error) {
+        Pop.error(error);
+      }
     }
     return {
+      // createComment,
       getEventById,
       commentData,
       route,
       comments: computed(() => AppState.comments),
       activeEvent: computed(() => AppState.activeEvent),
       async buyTicket() {
+      },
 
-      },
-      async createComment() {
-        commentData.value.eventId = route.params.eventId
-        console.log('comment value', commentData.value)
-        await commentsService.createComment(commentData.value)
-        Pop.success('comment made')
-        commentData.value = ''
-      },
-    }
-  }
+    };
+  },
+  components: { CommentCard }
 };
 </script>
 
