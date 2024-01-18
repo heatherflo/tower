@@ -26,6 +26,8 @@
 import { onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { RouterLink } from 'vue-router';
+
 export default {
   setup() {
 
@@ -44,7 +46,7 @@ export default {
       }
     }
   },
-  components: { Login }
+  components: { Login, RouterLink }
 }
 </script>
 

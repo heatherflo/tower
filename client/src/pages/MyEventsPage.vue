@@ -30,8 +30,6 @@
               <label for="coverImg">Cover image</label>
               <input class="form-control" type="url">
             </div>
-
-
             <div class="text-center mt-2">
               <button class="btn btn-info p-2 col-12">Create
                 Event
@@ -44,6 +42,16 @@
     </div>
 
     <!-- my events I have created -->
+    <section class="row">
+      <div class="col-12">
+        <h4>My Events</h4>
+      </div>
+      <div class="myEvents" v-for="myEvent in myEvents">
+        <MyEventsCard :myEvent="myEvent" :key="myEvent" />
+
+      </div>
+
+    </section>
 
     <!-- events I am attending  -->
   </div>
@@ -53,16 +61,20 @@
 <script>
 import { computed } from 'vue';
 import { AppState } from '../AppState';
-
+import MyEventsCard from './components/MyEventsCard.vue'
 
 
 
 export default {
   setup() {
     return {
-      account: computed(() => AppState.account)
-    }
-  },
+      account: computed(() => AppState.account),
+      async getMyEvents() {
 
+      }
+    }
+
+  },
+  components: { MyEventsCard }
 }
 </script>
