@@ -42,6 +42,13 @@
 
         </div>
       </section>
+      <section class="row">
+        <div class="col-12">
+          <h4 class="ms-3">Comments</h4>
+          {{ comments }}
+        </div>
+
+      </section>
 
     </section>
 
@@ -77,14 +84,19 @@ export default {
     }
     return {
       getEventById,
+      commentData,
       route,
+      comments: computed(() => AppState.comments),
       activeEvent: computed(() => AppState.activeEvent),
       async buyTicket() {
 
       },
       async createComment() {
+        commentData.value.eventId = route.params.eventId
         console.log('comment value', commentData.value)
-
+        await commentsService.createComment(commentData.value)
+        Pop.success('comment made')
+        commentData.value = ''
       },
     }
   }
