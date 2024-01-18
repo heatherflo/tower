@@ -2,6 +2,7 @@ import { AppState } from "../AppState"
 import { api } from "./AxiosService"
 import { Comment } from "../models/Comment"
 
+
 class CommentsService {
 
   async createComment(commentData) {
@@ -11,6 +12,12 @@ class CommentsService {
     const newComment = new Comment(response.data)
     console.log('newComment', newComment)
     AppState.comments.push(newComment)
+  }
+
+  async getEventComments(eventId) {
+    const response = await api.get(`api/events/${eventId}/comments`)
+    console.log('getting all comments', response.data)
+    const newComment = response.data.map(comment => new Event(comment))
   }
 
 }

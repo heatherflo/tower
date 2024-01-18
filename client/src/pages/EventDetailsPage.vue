@@ -73,7 +73,7 @@ export default {
     const commentData = ref({});
     const route = useRoute();
     onMounted(() => {
-
+      getEventComments()
     });
 
     watchEffect(() => {
@@ -95,9 +95,18 @@ export default {
       catch (error) {
         Pop.error(error);
       }
+    };
+    async function getEventComments() {
+      try {
+        await commentsService.getEventComments(route.params.eventId)
+
+      } catch (error) {
+        Pop.error(error)
+      }
     }
     return {
-      // createComment,
+      getEventComments,
+      createComment,
       getEventById,
       commentData,
       route,
