@@ -45,7 +45,7 @@
 
     </section>
 
-    <!-- {{ activeEvent }} -->
+
   </div>
 </template>
 
@@ -74,19 +74,18 @@ export default {
         Pop.error(error)
       }
 
-      async function createComment() {
-        console.log('comment value', commentData.value)
-
-      }
     }
     return {
-      createComment,
       getEventById,
       route,
       activeEvent: computed(() => AppState.activeEvent),
       async buyTicket() {
 
-      }
+      },
+      async createComment() {
+        console.log('comment value', commentData.value)
+
+      },
     }
   }
 };
