@@ -1,6 +1,7 @@
 <template>
   <div class="myEvents">
-    {{ }}
+    <h2>Is this showing up?</h2>
+
 
   </div>
 </template>
@@ -8,7 +9,8 @@
 
 <script>
 
-
+import { AppState } from '../AppState';
+import { computed } from 'vue';
 
 export default {
   props: { type: Event, required: true },

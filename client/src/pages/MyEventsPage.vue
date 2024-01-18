@@ -46,14 +46,19 @@
       <div class="col-12">
         <h4>My Events</h4>
       </div>
-      <div class="myEvents" v-for="myEvent in myEvents">
+      <div class=" col-12 col-md-3 myEvents" v-for="myEvent in myEvents">
         <MyEventsCard :myEvent="myEvent" :key="myEvent" />
 
       </div>
 
     </section>
 
-    <!-- events I am attending  -->
+    <!-- events I am attending/my tickets  -->
+    <section class="row">
+      <div class="col-12 col-md-4">
+        <h3 class="ms-3">Upcoming Events</h3>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -61,16 +66,36 @@
 <script>
 import { computed } from 'vue';
 import { AppState } from '../AppState';
-import MyEventsCard from './components/MyEventsCard.vue'
+import MyEventsCard from '../components/MyEventsCard.vue';
+import Pop from '../utils/Pop';
+import { eventsService } from '../services/EventsService';
+import { useRoute } from 'vue-router';
 
 
 
 export default {
   setup() {
+    const route = useRoute()
     return {
+      route,
+      myEvents: computed(() => AppState.myEvents),
       account: computed(() => AppState.account),
-      async getMyEvents() {
+      // async getMyEvents() {
+      //   try {
+      //     await eventsService.getMyEvents()
+      //   } catch (error) {
+      //     Pop.error(error)
+      //   }
+      // }
 
+      async createEvent() {
+        try {
+          const eventData = { creatorId: route.params.creatorId }
+          await eventsService.createEvent(eventData)
+
+        } catch (error) {
+          Pop.error(error)
+        }
       }
     }
 
