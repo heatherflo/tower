@@ -17,7 +17,8 @@ class CommentsService {
   async getEventComments(eventId) {
     const response = await api.get(`api/events/${eventId}/comments`)
     console.log('getting all comments', response.data)
-    const newComment = response.data.map(comment => new Event(comment))
+    AppState.comments = response.data.map(comment => new Comment(comment))
+
   }
 
 }
