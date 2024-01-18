@@ -16,6 +16,21 @@ class CommentsService {
     return comments
   }
 
+  async deleteComment(commentId, userId) {
+    const commentToDelete = await dbContext.Comments.findById(commentId).populate('body')
+    if (!commentToDelete) {
+      throw new Error('Wait, there is no comment to delete')
+    }
+    // if (commentId.accountId = !userId) {
+    //   throw new Error("oops, you can't delete this comment cause you didn't make it")
+    // }
+    await commentToDelete.deleteOne()
+    return 'comment was removed'
+  }
+
+
+
+
 }
 
 export const commentsService = new CommentsService()
