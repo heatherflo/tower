@@ -9,26 +9,38 @@
           <form @submit.prevent="createEvent()" class="">
             <div>
               <label for="name">Name of Event</label>
-              <input class="form-control" type="text" id="name">
+              <input required v-model="eventData.name" class="form-control" type="text" id="create-name" minlength="3"
+                maxlength="30">
             </div>
             <div>
               <label for="type">Select Type of Event</label>
-              <select class="form-control" type="dropdown">
-                <option value="option1">--select--</option>
-                <option value="option2">concert</option>
-                <option value="option3">convention</option>
-                <option value="option4">sport</option>
-                <option value="option5">digital</option>
+              <select required v-model="eventData.type" class="form-control">
+                <!-- <option selected disabled value="">select a category</option> -->
+                <option selected v-for="option in typeOptions" :value="option">{{ option }}</option>
 
               </select>
             </div>
             <div>
               <label for="date">When is it?</label>
-              <input class="form-control" type="text">
+              <input required v-model="eventData.startDate" class="form-control" minlength="3" maxlength="" type="text">
+            </div>
+            <div>
+              <label for="capacity">How many people can attend?</label>
+              <input required v-model="eventData.capacity" class="form=control w-100 mt-2" type="number" name="capacity"
+                id="capacity" min="3" max="2000">
+            </div>
+            <div>
+              <label for="location">Where will this event take place?</label>
+              <input required class="form-control" v-model="eventData.location" type="text" minlength="">
             </div>
             <div>
               <label for="coverImg">Cover image</label>
-              <input class="form-control" type="url">
+              <input required v-model="eventData.coverImg" class="form-control " type="url" minlength="3" maxlength="500">
+            </div>
+            <div>
+              <label for="description">Tell us about your event:</label>
+              <textarea required v-model="eventData.description" name="description" id="create-description"
+                class="form-control w-100" minlength="3" maxlength="1000" cols="30" rows="10"></textarea>
             </div>
             <div class="text-center mt-2">
               <button class="btn btn-info p-2 col-12">Create
@@ -38,6 +50,9 @@
             </div>
           </form>
         </div>
+      </section>
+      <section v-else>
+        Please log in to create an event
       </section>
     </div>
 
@@ -64,20 +79,26 @@
 
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { AppState } from '../AppState';
 import MyEventsCard from '../components/MyEventsCard.vue';
 import Pop from '../utils/Pop';
 import { eventsService } from '../services/EventsService';
 import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 
 
 export default {
   setup() {
+    const eventData = ref({})
     const route = useRoute()
+    const router = useRouter()
     return {
+      typeOptions: ['sport', 'concert', 'convention', 'digital'],
       route,
+      eventData,
+      events: computed(() => AppState.events),
       myEvents: computed(() => AppState.myEvents),
       account: computed(() => AppState.account),
       // async getMyEvents() {
@@ -89,10 +110,14 @@ export default {
       // }
 
       async createEvent() {
+        // TODO check again for the eventId and why it is coming up as undefined
         try {
-          const eventData = { creatorId: route.params.creatorId }
-          await eventsService.createEvent(eventData)
-
+          console.log('eventData', eventData.value)
+          await eventsService.createEvent(eventData.value)
+          Pop.success('event created')
+          eventData.value = {}
+          router.push({ name: 'Event Details', params: { eventId: event.id } })
+          console.log('eventId', eventId)
         } catch (error) {
           Pop.error(error)
         }
