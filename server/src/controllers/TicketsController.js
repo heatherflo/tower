@@ -10,7 +10,7 @@ export class TicketsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.buyTicket)
   }
-  async buyTicket(response, request, next) {
+  async buyTicket(request, response, next) {
     try {
       const ticketData = request.body
       // TODO figure out this line - postman not liking the .id - can't use creatorId as that is not a property in the ticket Schema 

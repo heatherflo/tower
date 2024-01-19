@@ -104,6 +104,8 @@ export default {
         Pop.error(error)
       }
     }
+    // TODO make cancel for events
+    // TODO make a delete button for comments
     return {
       getEventComments,
       createComment,

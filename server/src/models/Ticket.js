@@ -10,16 +10,16 @@ export const TicketSchema = new Schema({
   }
 )
 
-TicketSchema.virtual('profile'), {
+TicketSchema.virtual('profile', {
   localField: 'accountId',
   foreignField: '_id',
   ref: 'Account',
   justOne: true
-};
+});
 
-TicketSchema.virtual('event'), {
+TicketSchema.virtual('event', {
   localField: 'eventId',
   foreignField: '_id',
   ref: 'Event',
   justOne: true
-}
+})
