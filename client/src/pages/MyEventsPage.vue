@@ -128,7 +128,7 @@ export default {
           console.log('eventData', eventData.value)
           // FIXME we need to grab the response data from your post request and save it here in your method
           // NOTE look at mick's create album as a reference
-          await eventsService.createEvent(eventData.value)
+          const event = await eventsService.createEvent(eventData.value)
           Pop.success('event created')
           eventData.value = {}
           router.push({ name: 'Event Details', params: { eventId: event.id } })

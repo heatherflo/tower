@@ -34,9 +34,9 @@
     <section class="row">
       <!-- who is attending the event -->
       <!-- FIXME maybe iterate over this to pull out ticketholder info, reference collaborators on albumDetailsPage on PostIt -->
-      <div class="col-10 d-flex justify-content-center profile-pic">
+      <div class="col-10 d-flex justify-content-center profile-pic" v-for="ticket in tickets">
 
-        {{ tickets }}
+        {{ ticket.profile.picture }}
 
 
       </div>
@@ -95,7 +95,7 @@ export default {
     watchEffect(() => {
       getEventById();
       route.params.eventId;
-      // getOtherPeoplesEventTickets()
+      getOtherPeoplesEventTickets()
 
     });
     async function createComment() {
@@ -113,13 +113,13 @@ export default {
         Pop.error(error);
       }
     };
-    // async function getOtherPeoplesEventTickets() {
-    //   try {
-    //     await ticketsService.getOtherPeoplesEventTickets()
-    //   } catch (error) {
-    //     Pop.error(error)
-    //   }
-    // }
+    async function getOtherPeoplesEventTickets() {
+      try {
+        await ticketsService.getOtherPeoplesEventTickets()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     async function getEventComments() {
       try {
         await commentsService.getEventComments(route.params.eventId)
@@ -133,7 +133,7 @@ export default {
     return {
       tickets: computed(() => AppState.tickets),
       getEventComments,
-      // getOtherPeoplesEventTickets,
+      getOtherPeoplesEventTickets,
       createComment,
       getEventById,
       commentData,
