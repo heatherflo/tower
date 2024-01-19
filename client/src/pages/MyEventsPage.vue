@@ -22,6 +22,7 @@
             </div>
             <div>
               <label for="date">When is it?</label>
+              <!-- FIXME use a date picker! -->
               <input required v-model="eventData.startDate" class="form-control" minlength="3" maxlength="" type="text">
             </div>
             <div>
@@ -56,6 +57,7 @@
       </section>
     </div>
 
+    <!-- NOTE this is a stretch goal -->
     <!-- my events I have created -->
     <section class="row">
       <div class="col-12">
@@ -68,6 +70,8 @@
 
     </section>
 
+    <!-- TODO make network request to get events I have to tickets to -->
+    <!-- TODO reference mick's deleteCollaborator from PostIt here -->
     <!-- events I am attending/my tickets  -->
     <section class="row">
       <div class="col-12 col-md-4">
@@ -122,6 +126,8 @@ export default {
         // TODO check again for the eventId and why it is coming up as undefined
         try {
           console.log('eventData', eventData.value)
+          // FIXME we need to grab the response data from your post request and save it here in your method
+          // NOTE look at mick's create album as a reference
           await eventsService.createEvent(eventData.value)
           Pop.success('event created')
           eventData.value = {}

@@ -1,7 +1,10 @@
 <template>
+  <!-- FIXME where is my container -->
   <div class="EventDetails">
     <section class="row">
+      <!-- FIXME no x-axis margin on columns -->
       <div class="col-12 m-3">
+        <!-- TODO if the event is cancelled, render some HTML here that tells us that -->
         <h2>{{ activeEvent.name }}</h2>
 
       </div>
@@ -16,6 +19,7 @@
           <p>{{ activeEvent.description }}</p>
         </div>
         <!-- TODO make dent not pump our raw data -->
+        <!-- FIXME need to render our startdate in a different way here -->
         <h5> {{ activeEvent.startDate = new Date().toLocaleDateString('en-US', {
           month: 'numeric', day: 'numeric', year: 'numeric'
         }) }}</h5>
@@ -25,42 +29,44 @@
             </i></button>
         </div>
       </div>
-      <section class="row">
-        <!-- who is attending the event -->
-        <div class="col-10 d-flex justify-content-center profile-pic">
+    </section>
 
-          {{ tickets }}
+    <section class="row">
+      <!-- who is attending the event -->
+      <!-- FIXME maybe iterate over this to pull out ticketholder info, reference collaborators on albumDetailsPage on PostIt -->
+      <div class="col-10 d-flex justify-content-center profile-pic">
+
+        {{ tickets }}
 
 
-        </div>
-      </section>
-      <section class="row mt-5 justify-content-center">
-        <!-- comments -->
-        <div class="col-10 d-flex">
-          <form @submit.prevent="createComment()" class="form-control">
-            <div>
-              <label for="comment">Comment on the event</label>
-              <textarea v-model="commentData.body" class="w-100  form-control" name="comment" id="create-comment"
-                rows="5"></textarea>
-            </div>
-            <div>
-              <button class="btn btn-info text-end">submit</button>
-            </div>
-          </form>
-
-        </div>
-      </section>
-      <section class="row">
-        <div class="col-12">
-          <h4 class="ms-3 mt-3">Comments</h4>
-          <div v-for="comment in comments" class="mb-3">
-            <CommentCard :comment="comment" :key="comment.id" />
+      </div>
+    </section>
+    <section class="row mt-5 justify-content-center">
+      <!-- comments -->
+      <div class="col-10 d-flex">
+        <form @submit.prevent="createComment()" class="form-control">
+          <div>
+            <label for="comment">Comment on the event</label>
+            <textarea v-model="commentData.body" class="w-100  form-control" name="comment" id="create-comment"
+              rows="5"></textarea>
           </div>
-        </div>
+          <div>
+            <button class="btn btn-info text-end">submit</button>
+          </div>
+        </form>
 
-      </section>
+      </div>
+    </section>
+    <section class="row">
+      <div class="col-12">
+        <h4 class="ms-3 mt-3">Comments</h4>
+        <div v-for="comment in comments" class="mb-3">
+          <CommentCard :comment="comment" :key="comment.id" />
+        </div>
+      </div>
 
     </section>
+
 
 
   </div>
@@ -134,6 +140,8 @@ export default {
       route,
       comments: computed(() => AppState.comments),
       activeEvent: computed(() => AppState.activeEvent),
+      // TODO reference mick's isCollaborator computed on PostIt to find out if logged-in user is attending an event
+      // TODO write a computed here that looks at the event's capacity and the amount of tickets purchased (something - something)
       async buyTicket() {
         try {
           const ticketData = { eventId: route.params.eventId }

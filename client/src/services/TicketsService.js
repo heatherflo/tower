@@ -7,6 +7,7 @@ class TicketsService {
   async buyTicket(ticketData) {
     const response = await api.post(`api/tickets`, ticketData)
     console.log('buyingTicket', response.data)
+    // FIXME don't forget to pass data to our ticket class!
     const newTicket = new Ticket
     AppState.tickets.push(newTicket)
   }

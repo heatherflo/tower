@@ -14,7 +14,8 @@ const routes = [
   {
     path: '/myEvents',
     name: 'My Events',
-    component: loadPage('MyEventsPage')
+    component: loadPage('MyEventsPage'),
+    // FIXME maybe add authguard to this route
   },
   {
     path: '/account',
@@ -26,6 +27,7 @@ const routes = [
     path: '/eventDetails/:eventId',
     name: 'Event Details',
     component: loadPage('EventDetailsPage'),
+    // FIXME remove this if you want non-logged in users to visit this page
     beforeEnter: authGuard
   }
 ]

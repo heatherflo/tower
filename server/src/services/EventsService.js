@@ -24,7 +24,10 @@ class EventsService {
   }
   // TODO see what is wrong with this function to make my test work correctly in Postman- may be as a result of the fact that the other things are not passing first in postman
   async editEventById(eventId, eventData) {
+
     const originalEvent = await this.getEventById(eventId)
+
+    // TODO make sure event is not cancelled before editing
 
     originalEvent.name = eventData.name ? eventData.name : originalEvent.name
     originalEvent.description = eventData.description ? eventData.description : originalEvent.description
@@ -50,8 +53,9 @@ class EventsService {
   }
 
   async getOtherPeoplesEventTickets(eventId) {
-    const eventTickets = await dbContext.Tickets.findById({ eventId: eventId })
-    eventTickets.populate('creator', 'name picture')
+    const eventTickets = await dbContext.Tickets.find({ eventId: eventId })
+    // FIXME see which virtuals you have set up on ticket schema
+    // .populate('creator', 'name picture')
     return eventTickets
   }
 

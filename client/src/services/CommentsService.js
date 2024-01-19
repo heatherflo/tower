@@ -24,6 +24,7 @@ class CommentsService {
   async deleteComment(commentId) {
     const response = await api.delete(`api/comments/${commentId}`)
     console.log('deleting comment', response.data)
+    // FIXME something weird happening here
     const indexToRemove = AppState.comments.findIndex(comment => comment.id = commentId)
     AppState.comments.splice(indexToRemove, 1)
   }
