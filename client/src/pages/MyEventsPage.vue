@@ -72,6 +72,7 @@
     <section class="row">
       <div class="col-12 col-md-4">
         <h3 class="ms-3">Upcoming Events</h3>
+
       </div>
     </section>
   </div>
@@ -86,6 +87,7 @@ import Pop from '../utils/Pop';
 import { eventsService } from '../services/EventsService';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
+import { ticketsService } from '../services/TicketsService';
 
 
 
@@ -108,6 +110,13 @@ export default {
       //     Pop.error(error)
       //   }
       // }
+      async getMyTickets() {
+        try {
+          await ticketsService.getMyTickets(eventId)
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
 
       async createEvent() {
         // TODO check again for the eventId and why it is coming up as undefined

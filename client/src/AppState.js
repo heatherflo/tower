@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import { Ticket } from './models/Ticket.js'
 
 // NOTE AppState is a reactive object to contain app level data
 export const AppState = reactive({
@@ -9,12 +10,17 @@ export const AppState = reactive({
   /**@type {Event[]} */
   events: [],
 
-  /** @type {Event} */
-  activeEvent: null,
+  /** @type {Event[]} */
+  activeEvent: [],
 
   /**@type {Event[]} */
   myEvents: [],
 
   /**@type {Comment[]} */
-  comments: []
+  comments: [],
+
+  /**@type {Ticket[]} */
+  tickets: [],
+
+
 })

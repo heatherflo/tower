@@ -12,6 +12,8 @@ export class Event {
     this.startDate = new Date(data.startDate)
     this.isCanceled = data.isCanceled
     this.type = data.type
+    this.creator = data.creator
+    this.ticketCount = data.ticketCount
   }
 }
 

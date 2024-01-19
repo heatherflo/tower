@@ -12,8 +12,14 @@ export class AccountController extends BaseController {
       .get('/tickets', this.getMyTickets)
   }
   async getMyTickets(request, response, next) {
-    const ticket = await ticketsService.getMyTickets()
-    // REVIEW START HERE 
+    try {
+      const userId = request.userInfo.id
+      const myTickets = await ticketsService.getMyTickets(userId)
+      response.send(myTickets)
+    } catch (error) {
+      next(error)
+    }
+
   }
 
 

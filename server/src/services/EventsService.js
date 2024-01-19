@@ -49,6 +49,11 @@ class EventsService {
     return eventToCancel
   }
 
+  async getOtherPeoplesEventTickets(eventId) {
+    const eventTickets = await dbContext.Tickets.findById({ eventId: eventId })
+    eventTickets.populate('creator', 'name picture')
+    return eventTickets
+  }
 
 
 

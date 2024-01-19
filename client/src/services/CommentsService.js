@@ -21,6 +21,13 @@ class CommentsService {
 
   }
 
+  async deleteComment(commentId) {
+    const response = await api.delete(`api/comments/${commentId}`)
+    console.log('deleting comment', response.data)
+    const indexToRemove = AppState.comments.findIndex(comment => comment.id = commentId)
+    AppState.comments.splice(indexToRemove, 1)
+  }
+
 }
 
 export const commentsService = new CommentsService()

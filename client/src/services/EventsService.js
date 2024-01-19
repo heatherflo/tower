@@ -18,8 +18,7 @@ class EventsService {
     logger.log('creating event', response.data)
     const newEvent = new Event(response.data)
     AppState.events.push(newEvent)
-    // TODO ask why we are returning newAlbum or newEvent here
-    return newEvent //return album so the form can recognize the data
+    return newEvent
   }
   async getEventById(eventId) {
     const response = await api.get(`api/events/${eventId}`)

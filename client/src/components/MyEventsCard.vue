@@ -11,6 +11,7 @@
 
 import { AppState } from '../AppState';
 import { computed } from 'vue';
+import { Event } from '../models/Event';
 
 export default {
   props: { type: Event, required: true },
