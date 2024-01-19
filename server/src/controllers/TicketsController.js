@@ -7,6 +7,8 @@ export class TicketsController extends BaseController {
   constructor() {
     super('api/tickets')
     this.router
+      .get('/:eventId/tickets', this.getOtherPeoplesEventTickets)
+
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.buyTicket)
   }
@@ -17,6 +19,15 @@ export class TicketsController extends BaseController {
       ticketData.accountId = request.userInfo.id
       const ticket = await ticketsService.buyTicket(ticketData)
       response.send(ticket)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getOtherPeoplesEventTickets(request, response, next) {
+    try {
+      const eventId = request.params.eventId
+      const eventTickets = await ticketsService.getOtherPeoplesEventTickets(eventId)
+      response.send(eventTickets)
     } catch (error) {
       next(error)
     }

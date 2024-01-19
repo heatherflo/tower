@@ -7,16 +7,17 @@ class EventsService {
   async createEvent(eventData) {
     const event = await dbContext.Events.create(eventData)
     await event.populate('creator', 'name picture')
+    await event.populate('ticketCount')
     return event
   }
 
   async getAllEvents() {
-    const events = await dbContext.Events.find().populate('creator', 'name picture')
+    const events = await dbContext.Events.find().populate('creator', 'name picture').populate('ticketCount')
     return events
   }
 
   async getEventById(eventId) {
-    const event = await dbContext.Events.findById(eventId).populate('creator', 'name picture')
+    const event = await (await dbContext.Events.findById(eventId).populate('creator', 'name picture')).populate('ticketCount')
     if (!event) {
       throw new BadRequest(`Invalid id: ${eventId}`)
     }
@@ -51,14 +52,6 @@ class EventsService {
     await eventToCancel.save()
     return eventToCancel
   }
-
-  async getOtherPeoplesEventTickets(eventId) {
-    const eventTickets = await dbContext.Tickets.find({ eventId: eventId })
-    // FIXME see which virtuals you have set up on ticket schema
-    // .populate('creator', 'name picture')
-    return eventTickets
-  }
-
 
 
 }

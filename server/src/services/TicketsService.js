@@ -15,6 +15,12 @@ class TicketsService {
     const myTickets = await dbContext.Tickets.find({ accountId: userId }).populate('event')
     return myTickets
   }
+  async getOtherPeoplesEventTickets(eventId) {
+    const eventTickets = await dbContext.Tickets.find({ eventId }).populate('profile', 'name picture')
+    // FIXME see which virtuals you have set up on ticket schema
+    // .populate('creator', 'name picture')
+    return eventTickets
+  }
 
 }
 

@@ -28,9 +28,9 @@ EventSchema.virtual('creator', {
 // FIXME the fields on this might not be set up correctly, reference the albumSchema's memberCount
 // TODO make sure you populate this when the postman tests tell you to
 EventSchema.virtual('ticketCount', {
-  localField: 'creatorId',
+  localField: '_id',
   foreignField: 'eventId',
-  ref: 'Account',
+  ref: 'Ticket',
   count: true,
 }
 )

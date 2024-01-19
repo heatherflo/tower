@@ -10,7 +10,7 @@ export class EventsController extends BaseController {
       .get('', this.getAllEvents)
       .get('/:eventId', this.getEventById)
       .get('/:eventId/comments', this.getEventComments)
-      .get('/:eventId/tickets', this.getOtherPeoplesEventTickets)
+
 
 
       .use(Auth0Provider.getAuthorizedUserInfo)
@@ -86,13 +86,5 @@ export class EventsController extends BaseController {
       next(error)
     }
   }
-  async getOtherPeoplesEventTickets(request, response, next) {
-    try {
-      const eventId = request.params.eventId
-      const eventTickets = await eventsService.getOtherPeoplesEventTickets(eventId)
-      response.send(eventTickets)
-    } catch (error) {
-      next(error)
-    }
-  }
+
 }
