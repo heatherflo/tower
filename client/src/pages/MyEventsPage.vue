@@ -77,7 +77,7 @@
         <h3 class="ms-3">Upcoming Events</h3>
         <div class="col-12 col-md-3" v-for="ticket in tickets">
           {{ tickets }}
-          <MyTicket :key="ticket.id" :ticket="ticket" />
+          <!-- <MyTicket :key="ticket.id" :ticket="ticket" /> -->
         </div>
       </div>
     </section>

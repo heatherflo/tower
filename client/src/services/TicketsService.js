@@ -14,8 +14,8 @@ class TicketsService {
   async getMyTickets() {
     const response = await api.get('account/tickets')
     console.log('getting my tickets', response.data)
-    const newTicket = new Ticket(response.data)
-    AppState.tickets.push(newTicket)
+    const newTickets = response.data.map(ticket => new Ticket(ticket))
+    AppState.tickets.push(newTickets)
   }
 
   async getOtherPeoplesEventTickets(eventId) {
