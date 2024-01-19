@@ -15,7 +15,7 @@
       <div class="container">
         <section class="row bg-light p-3 rounded my-2 gap-2">
           <!-- 'concert', 'convention', 'sport', 'digital' -->
-          <button class="col-12 col-md ms-2 btn btn-outline-dark" :class="{ 'bg-info': filterBy == '' }"
+          <button class="col-12 col-md btn btn-outline-dark" :class="{ 'bg-info': filterBy == '' }"
             @click="filterBy = ''">all</button>
 
           <button class="col-12 col-md btn btn-outline-dark" :class="{ 'bg-info': filterBy == 'concert' }"
@@ -38,7 +38,7 @@
     <!-- showing off all the events   -->
     <div class="container">
       <section class="row">
-        <div class="col-12 col-md-3" v-for="event in events" :key="event">
+        <div class="col-12 col-md-3 mt-3" v-for="event in events" :key="event">
           <EventCard :event="event" :key="event.id" />
         </div>
       </section>

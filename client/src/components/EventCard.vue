@@ -1,9 +1,12 @@
 <template>
   <RouterLink :to="{ path: `/eventDetails/${event.id}` }">
-    <div class="EventCard card rounded selectable">
+    <div class="EventCard card rounded border-dark border-2 selectable">
 
       <img :src="event.coverImg" :alt="event.name">
-      {{ event.name }}
+      <div class="p-2">
+        {{ event.name }}
+
+      </div>
     </div>
 
   </RouterLink>

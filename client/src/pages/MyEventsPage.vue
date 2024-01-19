@@ -1,9 +1,9 @@
 <template>
-  <div class="myEventsPage">
-    <h4>This is my events page</h4>
+  <div class="myEventsPage container-fluid">
+    <h4 class="text-center mt-2">Welcome to your events page</h4>
     <!-- create event button -->
     <div class="container-fluid">
-      <section class="row" v-if="account.id">
+      <section class="row">
         <div class="col-12">
 
           <form @submit.prevent="createEvent()" class="">
@@ -23,7 +23,7 @@
             <div>
               <label for="date">When is it?</label>
               <!-- FIXME use a date picker! -->
-              <input required v-model="eventData.startDate" class="form-control" minlength="3" maxlength="" type="text">
+              <input required v-model="eventData.startDate" class="form-control" minlength="3" maxlength="" type="date">
             </div>
             <div>
               <label for="capacity">How many people can attend?</label>
@@ -52,9 +52,7 @@
           </form>
         </div>
       </section>
-      <section v-else>
-        Please log in to create an event
-      </section>
+
     </div>
 
     <!-- NOTE this is a stretch goal -->
@@ -72,6 +70,7 @@
 
     <!-- TODO make network request to get events I have to tickets to -->
     <!-- TODO reference mick's deleteCollaborator from PostIt here -->
+
     <!-- events I am attending/my tickets  -->
     <section class="row">
       <div class="col-12 col-md-4">
@@ -107,13 +106,7 @@ export default {
       events: computed(() => AppState.events),
       myEvents: computed(() => AppState.myEvents),
       account: computed(() => AppState.account),
-      // async getMyEvents() {
-      //   try {
-      //     await eventsService.getMyEvents()
-      //   } catch (error) {
-      //     Pop.error(error)
-      //   }
-      // }
+
       async getMyTickets() {
         try {
           await ticketsService.getMyTickets(eventId)

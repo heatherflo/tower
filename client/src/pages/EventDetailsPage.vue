@@ -1,18 +1,19 @@
 <template>
   <!-- FIXME where is my container -->
-  <div class="EventDetails">
+
+  <div class="EventDetails container-fluid">
     <section class="row">
       <!-- FIXME no x-axis margin on columns -->
-      <div class="col-12 m-3">
+      <div class="col-12 mt-2">
         <!-- TODO if the event is cancelled, render some HTML here that tells us that -->
         <h2>{{ activeEvent.name }}</h2>
 
       </div>
-      <div class="col-6">
-        <img class="img-fluid ps-3" :src="activeEvent.coverImg" :alt="activeEvent.name">
+      <div class="col-12 col-md-6">
+        <img class="img-fluid " :src="activeEvent.coverImg" :alt="activeEvent.name">
       </div>
-      <div class="col-6 px-3">
-        <div>
+      <div class="col-12 col-md-6">
+        <div class="mt-2">
           <h2>What's happening?</h2>
         </div>
         <div>
@@ -20,10 +21,10 @@
         </div>
         <!-- TODO make dent not pump our raw data -->
         <!-- FIXME need to render our startdate in a different way here -->
-        <h5> {{ activeEvent.startDate = new Date().toLocaleDateString('en-US', {
+        <h5> {{ activeEvent.startDate.toLocaleDateString('en-US', {
           month: 'numeric', day: 'numeric', year: 'numeric'
         }) }}</h5>
-        <div class="d-flex flex-column me-3 justify-content-end">
+        <div class="d-flex flex-column justify-content-end">
           <h4 class="mt-3">{{ activeEvent.capacity }} spots left</h4>
           <button @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy Ticket <i><i class="mdi mdi-ticket"></i>
             </i></button>
@@ -36,7 +37,7 @@
       <!-- FIXME maybe iterate over this to pull out ticketholder info, reference collaborators on albumDetailsPage on PostIt -->
       <div class="col-10 d-flex justify-content-center profile-pic" v-for="ticket in tickets">
 
-        {{ ticket.profile.picture }}
+        <!-- {{ ticket.profile.picture }} -->
 
 
       </div>

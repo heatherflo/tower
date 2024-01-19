@@ -7,13 +7,13 @@ class TicketsService {
   async buyTicket(ticketData) {
     const response = await api.post(`api/tickets`, ticketData)
     console.log('buyingTicket', response.data)
-    // FIXME don't forget to pass data to our ticket class!
     const newTicket = new Ticket(response.data)
     AppState.tickets.push(newTicket)
   }
 
   async getOtherPeoplesEventTickets(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
+    //TODO ask why this is pulling an error when it goes to the page like it's supposed to
     console.log('getting others events', response.data)
     let othersTickets = response.data.map(ticket => new Ticket(ticket))
     AppState.othersTickets = othersTickets
