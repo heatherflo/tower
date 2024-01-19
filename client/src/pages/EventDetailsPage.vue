@@ -1,9 +1,7 @@
 <template>
-  <!-- FIXME where is my container -->
-
   <div class="EventDetails container-fluid">
-    <section class="row">
-      <!-- FIXME no x-axis margin on columns -->
+    <section v-if="activeEvent" class="row">
+
       <div class="col-12 mt-2">
         <!-- TODO if the event is cancelled, render some HTML here that tells us that -->
         <h2>{{ activeEvent.name }}</h2>
@@ -19,25 +17,28 @@
         <div>
           <p>{{ activeEvent.description }}</p>
         </div>
-        <!-- TODO make dent not pump our raw data -->
-        <!-- FIXME need to render our startdate in a different way here -->
+
         <h5> {{ activeEvent.startDate.toLocaleDateString('en-US', {
           month: 'numeric', day: 'numeric', year: 'numeric'
         }) }}</h5>
         <div class="d-flex flex-column justify-content-end">
-          <h4 class="mt-3">{{ activeEvent.capacity }} spots left</h4>
-          <button @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy Ticket <i><i class="mdi mdi-ticket"></i>
+          <h4 class="mt-3">{{ activeEvent.capacity - activeEvent.ticketCount }} spots left</h4>
+          <div v-if="isAttending">You are attending this event</div>
+          <button :disabled="isAttending" @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy Ticket
+            <i><i class="mdi mdi-ticket"></i>
             </i></button>
+
         </div>
       </div>
     </section>
 
     <section class="row">
       <!-- who is attending the event -->
-      <!-- FIXME maybe iterate over this to pull out ticketholder info, reference collaborators on albumDetailsPage on PostIt -->
-      <div class="col-10 d-flex justify-content-center profile-pic" v-for="ticket in tickets">
 
-        <!-- {{ ticket.profile.picture }} -->
+      <div class="col-1 d-flex" v-for="othersTicket in othersTickets">
+
+        <img class="profile-pic " :src="othersTicket.profile.picture" alt="">
+
 
 
       </div>
@@ -94,8 +95,9 @@ export default {
     });
 
     watchEffect(() => {
-      getEventById();
       route.params.eventId;
+
+      getEventById();
       getOtherPeoplesEventTickets()
 
     });
@@ -116,7 +118,7 @@ export default {
     };
     async function getOtherPeoplesEventTickets() {
       try {
-        await ticketsService.getOtherPeoplesEventTickets()
+        await ticketsService.getOtherPeoplesEventTickets(route.params.eventId)
       } catch (error) {
         Pop.error(error)
       }
@@ -132,7 +134,7 @@ export default {
     // TODO make cancel for events
 
     return {
-      tickets: computed(() => AppState.tickets),
+      othersTickets: computed(() => AppState.othersTickets),
       getEventComments,
       getOtherPeoplesEventTickets,
       createComment,
@@ -141,6 +143,10 @@ export default {
       route,
       comments: computed(() => AppState.comments),
       activeEvent: computed(() => AppState.activeEvent),
+      isAttending: computed(() => {
+        const account = AppState.tickets.find(ticket => ticket.accountId == AppState.account.id)
+        return account != undefined
+      }),
       // TODO reference mick's isCollaborator computed on PostIt to find out if logged-in user is attending an event
       // TODO write a computed here that looks at the event's capacity and the amount of tickets purchased (something - something)
       async buyTicket() {

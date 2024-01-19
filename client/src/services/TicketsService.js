@@ -11,6 +11,11 @@ class TicketsService {
     AppState.tickets.push(newTicket)
   }
 
+  async getMyTickets() {
+    const response = await api.get('account/tickets')
+    console.log('getting my tickets', response.data)
+  }
+
   async getOtherPeoplesEventTickets(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
     //TODO ask why this is pulling an error when it goes to the page like it's supposed to

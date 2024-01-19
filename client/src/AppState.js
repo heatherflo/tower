@@ -10,8 +10,8 @@ export const AppState = reactive({
   /**@type {Event[]} */
   events: [],
 
-  /** @type {Event[]} */
-  activeEvent: [],
+  /** @type {Event} */
+  activeEvent: null,
 
   /**@type {Event[]} */
   myEvents: [],

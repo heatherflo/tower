@@ -22,7 +22,7 @@
             </div>
             <div>
               <label for="date">When is it?</label>
-              <!-- FIXME use a date picker! -->
+
               <input required v-model="eventData.startDate" class="form-control" minlength="3" maxlength="" type="date">
             </div>
             <div>
@@ -75,7 +75,10 @@
     <section class="row">
       <div class="col-12 col-md-4">
         <h3 class="ms-3">Upcoming Events</h3>
-
+        <div class="col-12 col-md-3" v-for="ticket in tickets">
+          {{ tickets }}
+          <MyTicket :key="ticket.id" :ticket="ticket" />
+        </div>
       </div>
     </section>
   </div>
@@ -83,7 +86,7 @@
 
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
 import MyEventsCard from '../components/MyEventsCard.vue';
 import Pop from '../utils/Pop';
@@ -91,36 +94,42 @@ import { eventsService } from '../services/EventsService';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { ticketsService } from '../services/TicketsService';
+import MyTicket from '../components/MyTicket.vue'
 
 
 
 export default {
+
   setup() {
     const eventData = ref({})
     const route = useRoute()
     const router = useRouter()
+
+    onMounted(() => {
+      getMyTickets()
+    })
+    async function getMyTickets() {
+      try {
+        await ticketsService.getMyTickets()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
       typeOptions: ['sport', 'concert', 'convention', 'digital'],
       route,
       eventData,
+      getMyTickets,
       events: computed(() => AppState.events),
       myEvents: computed(() => AppState.myEvents),
       account: computed(() => AppState.account),
+      tickets: computed(() => AppState.tickets),
 
-      async getMyTickets() {
-        try {
-          await ticketsService.getMyTickets(eventId)
-        } catch (error) {
-          Pop.error(error)
-        }
-      },
+
 
       async createEvent() {
-        // TODO check again for the eventId and why it is coming up as undefined
         try {
           console.log('eventData', eventData.value)
-          // FIXME we need to grab the response data from your post request and save it here in your method
-          // NOTE look at mick's create album as a reference
           const event = await eventsService.createEvent(eventData.value)
           Pop.success('event created')
           eventData.value = {}
@@ -134,6 +143,6 @@ export default {
 
 
   },
-  components: { MyEventsCard }
+  components: { MyEventsCard, MyTicket }
 }
 </script>
