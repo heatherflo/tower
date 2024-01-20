@@ -17,13 +17,19 @@ class EventsService {
     const response = await api.post(`api/events`, eventData)
     logger.log('creating event', response.data)
     const newEvent = new Event(response.data)
-    AppState.events.push(newEvent)
+    AppState.myEvents.push(newEvent)
     return newEvent
   }
   async getEventById(eventId) {
     const response = await api.get(`api/events/${eventId}`)
     logger.log('getting event by Id', response.data)
     AppState.activeEvent = new Event(response.data)
+  }
+
+  async cancelEvent(eventId) {
+    const response = await api.delete(`api/events/${eventId}`)
+    console.log('canceling event', response.data)
+    const indexToRemove = AppState.myEvents.findIndex(event => event.id == eventId)
   }
 
   // async getMyEvents(){

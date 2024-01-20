@@ -18,11 +18,25 @@ import { AppState } from '../AppState';
 import { computed, ref, onMounted } from 'vue';
 import { Event } from '../models/Event'
 import { RouterLink } from 'vue-router';
+import Pop from '../utils/Pop';
+import { eventsService } from '../services/EventsService';
 
 export default {
   props: { event: { type: Event, required: true } },
   setup() {
-    return {};
+    return {
+
+      async cancelEvent(eventId) {
+        try {
+          if (await Pop.confirm('Are you sure?')) {
+            await eventsService.cancelEvent(eventId)
+            Pop.success('you canceled your event')
+          }
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
+    };
   },
   components: { RouterLink }
 };

@@ -29,6 +29,7 @@ class TicketsService {
   async deleteMyTicket(ticketId) {
     const response = await api.delete(`api/tickets/${ticketId}`)
     console.log('deleting ticket', response.data)
+    //TODO finish this so it saves in the appstate and then check for error again
   }
 }
 

@@ -15,7 +15,6 @@
             <div>
               <label for="type">Select Type of Event</label>
               <select required v-model="eventData.type" class="form-control">
-                <!-- <option selected disabled value="">select a category</option> -->
                 <option selected v-for="option in typeOptions" :value="option">{{ option }}</option>
 
               </select>
@@ -139,6 +138,7 @@ export default {
           Pop.error(error)
         }
       }
+
     }
 
 

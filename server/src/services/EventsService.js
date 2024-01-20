@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext.js"
 import { BadRequest } from "../utils/Errors.js"
+import { Forbidden } from "../utils/Errors.js"
 
 
 class EventsService {
@@ -44,9 +45,13 @@ class EventsService {
   }
 
 
-  // TODO make this function work so the postman won't throw an error- see above
-  async cancelEvent(eventId) {
+
+  async cancelEvent(eventId, userId) {
     const eventToCancel = await this.getEventById(eventId)
+    if (eventToCancel.creatorId != userId) {
+      throw new Forbidden("This is not your event to cancel")
+    }
+
     eventToCancel.isCanceled = !eventToCancel.isCanceled
 
     await eventToCancel.save()
