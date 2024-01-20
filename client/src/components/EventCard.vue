@@ -1,15 +1,20 @@
 <template>
-  <RouterLink :to="{ path: `/eventDetails/${event.id}` }">
-    <div class="EventCard card rounded border-dark border-2 selectable">
+  <div class="EventCard card rounded border-dark border-2 s">
+    <RouterLink :to="{ path: `/eventDetails/${event.id}` }">
 
-      <img :src="event.coverImg" :alt="event.name">
-      <div class="p-2">
+      <img class="selectable img-fluid" :src="event.coverImg" :alt="event.name">
+    </RouterLink>
+    <div class="p-2 d-flex justify-content-between">
+      <div>
         {{ event.name }}
-
+      </div>
+      <div v-if="account.id == event.creatorId">
+        <button v-if="!event.isCanceled" @click="cancelEvent(event.id)" class="btn btn-info">cancel</button>
+        <button class="btn btn-danger" v-if="event.isCanceled">CANCELED</button>
       </div>
     </div>
 
-  </RouterLink>
+  </div>
 </template>
 
 
@@ -20,12 +25,14 @@ import { Event } from '../models/Event'
 import { RouterLink } from 'vue-router';
 import Pop from '../utils/Pop';
 import { eventsService } from '../services/EventsService';
+import { eventListeners } from '@popperjs/core';
 
 export default {
   props: { event: { type: Event, required: true } },
   setup() {
     return {
-      // TODO is this the right place to put this?
+      account: computed(() => AppState.account),
+
       async cancelEvent(eventId) {
         try {
           if (await Pop.confirm('Are you sure?')) {
