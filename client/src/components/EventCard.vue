@@ -25,7 +25,7 @@ export default {
   props: { event: { type: Event, required: true } },
   setup() {
     return {
-
+      // TODO is this the right place to put this?
       async cancelEvent(eventId) {
         try {
           if (await Pop.confirm('Are you sure?')) {

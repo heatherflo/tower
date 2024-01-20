@@ -66,9 +66,8 @@
       </div>
 
     </section> -->
+    <!-- TODO make cancel button for events -->
 
-    <!-- TODO make network request to get events I have to tickets to -->
-    <!-- TODO reference mick's deleteCollaborator from PostIt here -->
 
     <!-- events I am attending/my tickets  -->
     <section class="row">
