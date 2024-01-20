@@ -1,7 +1,20 @@
 <template>
-  <div class="MyTicket container">
-
-    <img class="profile-pic" :src="ticket.profile.picture" alt="">
+  <div class="MyTicket container ">
+    <div class="myTicket card rounded border-dark border-2">
+      <img class="img-fluid" :src="myTicket.event.coverImg" alt="">
+      <div class="p-2">
+        {{ myTicket.event.name }}
+      </div>
+      <div class="p-2 d-flex justify-content-between">
+        {{ myTicket.event.location }}
+        <button @click="deleteMyTicket()" class=" btn-info btn"><i><i class="mdi mdi-delete"></i></i></button>
+      </div>
+      <!-- <div>
+        {{ myTicket.startDate.toLocaleDateString('en-US', {
+          month: 'numeric', day: 'numeric', year: 'numeric'
+        }) }}
+      </div> -->
+    </div>
   </div>
 </template>
 
@@ -10,13 +23,24 @@
 import { AppState } from '../AppState';
 import { computed, ref, onMounted } from 'vue';
 import { Ticket } from '../models/Ticket';
+import { ticketsService } from '../services/TicketsService';
+import Pop from '../utils/Pop';
+
 export default {
-  props: { ticket: { type: Ticket, required: true } },
+  props: { myTicket: { type: Ticket, required: true } },
 
   setup() {
-
+    async function deleteMyTicket(ticketId) {
+      try {
+        if (await Pop.confirm('Are you sure?'))
+          await ticketsService.deleteMyTicket(ticketId)
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
     return {
-      tickets: computed(() => AppState.tickets)
+      deleteMyTicket,
+      myTickets: computed(() => AppState.tickets)
     }
   }
 };

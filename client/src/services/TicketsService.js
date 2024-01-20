@@ -14,16 +14,21 @@ class TicketsService {
   async getMyTickets() {
     const response = await api.get('account/tickets')
     console.log('getting my tickets', response.data)
-    const newTickets = response.data.map(ticket => new Ticket(ticket))
-    AppState.tickets.push(newTickets)
+    const myTickets = response.data.map(ticket => new Ticket(ticket))
+    AppState.myTickets = myTickets
   }
 
   async getOtherPeoplesEventTickets(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
     //TODO ask why this is pulling an error when it goes to the page like it's supposed to
     console.log('getting others events', response.data)
-    let othersTickets = response.data.map(ticket => new Ticket(ticket))
+    const othersTickets = response.data.map(ticket => new Ticket(ticket))
     AppState.othersTickets = othersTickets
+  }
+
+  async deleteMyTicket(ticketId) {
+    const response = await api.delete(`api/tickets/${ticketId}`)
+    console.log('deleting ticket', response.data)
   }
 }
 

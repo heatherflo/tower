@@ -5,7 +5,6 @@ import { BadRequest } from "../utils/Errors.js"
 class CommentsService {
 
   async createComment(commentData) {
-
     const comment = await dbContext.Comments.create(commentData)
     await comment.populate('creator', 'name picture')
     return comment
@@ -15,9 +14,9 @@ class CommentsService {
     const comments = await dbContext.Comments.find({ eventId: eventId }).populate('creator', 'name picture')
     return comments
   }
-
+  //TODO make sure this deletes the comment actually made by the user
   async deleteComment(commentId, userId) {
-    const commentToDelete = await dbContext.Comments.findById(commentId).populate('body')
+    const commentToDelete = await dbContext.Comments.findById(commentId, userId).populate('body')
     if (!commentToDelete) {
       throw new Error('Wait, there is no comment to delete')
     }

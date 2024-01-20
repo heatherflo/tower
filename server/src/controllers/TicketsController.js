@@ -7,11 +7,13 @@ export class TicketsController extends BaseController {
   constructor() {
     super('api/tickets')
     this.router
-      // .get('/:eventId/tickets', this.getOtherPeoplesEventTickets)
+
 
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.buyTicket)
+      .delete('/:ticketId', this.deleteMyTicket)
   }
+
   async buyTicket(request, response, next) {
     try {
       const ticketData = request.body
@@ -23,13 +25,15 @@ export class TicketsController extends BaseController {
       next(error)
     }
   }
-  // async getOtherPeoplesEventTickets(request, response, next) {
-  //   try {
-  //     const eventId = request.params.eventId
-  //     const eventTickets = await ticketsService.getOtherPeoplesEventTickets(eventId)
-  //     response.send(eventTickets)
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
+  async deleteMyTicket(request, response, next) {
+    try {
+      const ticketId = request.params.ticketId
+      const userId = request.userInfo.id
+      const message = await ticketsService.deleteMyTicket(ticketId, userId)
+      response.send(message)
+    } catch (error) {
+      next(error)
+    }
+
+  }
 }

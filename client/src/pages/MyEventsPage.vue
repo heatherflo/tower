@@ -57,29 +57,29 @@
 
     <!-- NOTE this is a stretch goal -->
     <!-- my events I have created -->
-    <section class="row">
+    <!-- <section class="row">
       <div class="col-12">
         <h4>My Events</h4>
       </div>
-      <div class=" col-12 col-md-3 myEvents" v-for="myEvent in myEvents">
+      <div class=" col-12 myEvents" v-for="myEvent in myEvents">
         <MyEventsCard :myEvent="myEvent" :key="myEvent" />
 
       </div>
 
-    </section>
+    </section> -->
 
     <!-- TODO make network request to get events I have to tickets to -->
     <!-- TODO reference mick's deleteCollaborator from PostIt here -->
 
     <!-- events I am attending/my tickets  -->
     <section class="row">
-      <div class="col-12 col-md-4">
-        <h3 class="ms-3">Upcoming Events</h3>
-        <div class="col-12 col-md-3" v-for="ticket in tickets">
-          {{ tickets }}
-          <!-- <MyTicket :key="ticket.id" :ticket="ticket" /> -->
-        </div>
+      <h3 class="text-center mt-4">Upcoming Events</h3>
+
+      <div class="col-12 col-md-4 mt-3 d-flex" v-for="myTicket in myTickets">
+        <MyTicket :key="myTicket.id" :myTicket="myTicket" />
+
       </div>
+
     </section>
   </div>
 </template>
@@ -123,8 +123,8 @@ export default {
       events: computed(() => AppState.events),
       myEvents: computed(() => AppState.myEvents),
       account: computed(() => AppState.account),
-      tickets: computed(() => AppState.tickets),
-
+      myTickets: computed(() => AppState.myTickets),
+      profile: computed(() => AppState.profile),
 
 
       async createEvent() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="EventDetails container-fluid">
+  <div class="EventDetails container">
     <section v-if="activeEvent" class="row">
 
       <div class="col-12 mt-2">
@@ -16,6 +16,9 @@
         </div>
         <div>
           <p>{{ activeEvent.description }}</p>
+        </div>
+        <div>
+          <h4>{{ activeEvent.location }}</h4>
         </div>
 
         <h5> {{ activeEvent.startDate.toLocaleDateString('en-US', {
@@ -34,10 +37,12 @@
 
     <section class="row">
       <!-- who is attending the event -->
+      <div class="col-12">
+        <h3 class="mt-3">Who is attending?</h3>
+      </div>
+      <div class="col-1 d-flex mt-2" v-for="othersTicket in othersTickets">
 
-      <div class="col-1 d-flex" v-for="othersTicket in othersTickets">
-
-        <img class="profile-pic " :src="othersTicket.profile.picture" alt="">
+        <img :title=othersTicket.profile.name class="profile-pic " :src="othersTicket.profile.picture" alt="">
 
 
 
@@ -148,7 +153,7 @@ export default {
         return account != undefined
       }),
       // TODO reference mick's isCollaborator computed on PostIt to find out if logged-in user is attending an event
-      // TODO write a computed here that looks at the event's capacity and the amount of tickets purchased (something - something)
+
       async buyTicket() {
         try {
           const ticketData = { eventId: route.params.eventId }

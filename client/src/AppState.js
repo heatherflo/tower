@@ -22,5 +22,8 @@ export const AppState = reactive({
   /**@type {Ticket[]} */
   tickets: [],
 
+  /**@type {Ticket[]} */
+  myTickets: []
+
 
 })
