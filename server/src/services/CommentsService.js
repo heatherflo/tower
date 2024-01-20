@@ -16,11 +16,12 @@ class CommentsService {
   }
   //TODO make sure this deletes the comment actually made by the user
   async deleteComment(commentId, userId) {
-    const commentToDelete = await dbContext.Comments.findById(commentId, userId).populate('body')
+    const commentToDelete = await dbContext.Comments.findById(commentId, userId).populate('creator')
     if (!commentToDelete) {
       throw new Error('Wait, there is no comment to delete')
     }
-    // if (commentId.accountId = !userId) {
+    // // @ts-ignore
+    // if (commentToDelete.accountId = !userId) {
     //   throw new Error("oops, you can't delete this comment cause you didn't make it")
     // }
     await commentToDelete.deleteOne()

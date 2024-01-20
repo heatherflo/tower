@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
-import { BadRequest } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 import { eventsService } from "./EventsService.js"
 
 
@@ -22,12 +22,16 @@ class TicketsService {
   }
   //TODO match this with the deleteCollaborator in reference
   async deleteMyTicket(ticketId, userId) {
-    const ticketToDelete = await (await dbContext.Tickets.findById(ticketId, userId)).populate('event')
+    const ticketToDelete = await dbContext.Tickets.findById(ticketId).populate('event')
     if (!ticketToDelete) {
-      throw new Error('Wait, there is no ticket')
+      throw new Error('Wait, there is no ticket?')
+    }
+    if (ticketToDelete.accountId != userId) {
+      throw new Forbidden('oops, you are not authorized to delete this')
     }
     await ticketToDelete.deleteOne()
-    return 'comment was removed'
+    // @ts-ignore
+    return `You are no longer attending ${ticketToDelete.event.name}`
   }
 
 }
