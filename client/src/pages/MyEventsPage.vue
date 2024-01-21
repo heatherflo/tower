@@ -66,7 +66,7 @@
       </div>
 
     </section> -->
-    <!-- TODO make cancel button for events -->
+
 
 
     <!-- events I am attending/my tickets  -->
@@ -132,7 +132,6 @@ export default {
           Pop.success('event created')
           eventData.value = {}
           router.push({ name: 'Event Details', params: { eventId: event.id } })
-          console.log('eventId', eventId)
         } catch (error) {
           Pop.error(error)
         }

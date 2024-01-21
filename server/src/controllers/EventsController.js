@@ -57,8 +57,6 @@ export class EventsController extends BaseController {
   async editEventById(request, response, next) {
     try {
       const eventId = request.params.eventId
-      // TODO you might want to do something with this
-      // reference delete album on backend for similar logic
       const userId = request.userInfo.id
       const eventData = request.body
       const event = await eventsService.editEventById(eventId, eventData, userId)

@@ -17,7 +17,6 @@ export class TicketsController extends BaseController {
   async buyTicket(request, response, next) {
     try {
       const ticketData = request.body
-      // TODO figure out this line - postman not liking the .id - can't use creatorId as that is not a property in the ticket Schema 
       ticketData.accountId = request.userInfo.id
       const ticket = await ticketsService.buyTicket(ticketData)
       response.send(ticket)

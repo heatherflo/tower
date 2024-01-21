@@ -20,7 +20,6 @@ class TicketsService {
 
   async getOtherPeoplesEventTickets(eventId) {
     const response = await api.get(`api/events/${eventId}/tickets`)
-    //TODO ask why this is pulling an error when it goes to the page like it's supposed to
     console.log('getting others events', response.data)
     const othersTickets = response.data.map(ticket => new Ticket(ticket))
     AppState.othersTickets = othersTickets

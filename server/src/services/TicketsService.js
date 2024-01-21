@@ -20,7 +20,7 @@ class TicketsService {
     const eventTickets = await dbContext.Tickets.find({ eventId }).populate('profile', 'name picture')
     return eventTickets
   }
-  //TODO match this with the deleteCollaborator in reference
+
   async deleteMyTicket(ticketId, userId) {
     const ticketToDelete = await dbContext.Tickets.findById(ticketId).populate('event')
     if (!ticketToDelete) {
