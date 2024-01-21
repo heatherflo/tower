@@ -22,7 +22,7 @@ class CommentsService {
       throw new Error('Wait, there is no comment to delete')
     }
 
-    // if (commentToDelete.accountId != userId) {
+    // if (commentToDelete.creatorId != userId) {
     //   throw new Forbidden('oops, you are not authorized to delete this')
     // }
 

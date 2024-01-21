@@ -33,10 +33,10 @@ class EventsService {
       throw new Error('This event does not exist')
     }
     if (originalEvent.creatorId != userId) {
-      throw new Forbidden('You cannot edit an event you did not create')
+      throw new BadRequest('You cannot edit an event you did not create')
     }
     if (originalEvent.isCanceled)
-      throw new Forbidden('A canceled event cannot be edited')
+      throw new BadRequest('A canceled event cannot be edited')
 
     originalEvent.name = eventData.name ? eventData.name : originalEvent.name
     originalEvent.description = eventData.description ? eventData.description : originalEvent.description

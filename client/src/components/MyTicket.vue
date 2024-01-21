@@ -9,11 +9,11 @@
         {{ myTicket.event.location }}
         <button @click="deleteMyTicket(myTicket.id)" class=" btn-info btn"><i><i class="mdi mdi-delete"></i></i></button>
       </div>
-      <!-- <div>
-        {{ myTicket.startDate.toLocaleDateString('en-US', {
+      <div>
+        {{ activeEvent.startDate.toLocaleDateString('en-US', {
           month: 'numeric', day: 'numeric', year: 'numeric'
         }) }}
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ export default {
     }
     return {
       deleteMyTicket,
+      activeEvent: computed(() => AppState.activeEvent),
       myTickets: computed(() => AppState.tickets)
     }
   }
