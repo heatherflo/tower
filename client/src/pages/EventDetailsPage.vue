@@ -29,7 +29,7 @@
           </h4>
           <div v-if="isAttending">You are attending this event</div>
           <div v-if="activeEvent.isCanceled" class="red">Event is Canceled</div>
-          <button :disabled="isAttending || activeEvent.isCanceled || activeEvent.capacity == activeEvent.ticketCount"
+          <button :disabled="isAttending || activeEvent.isCanceled || activeEvent.ticketCount >= activeEvent.capacity"
             @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy
             Ticket
             <i><i class="mdi mdi-ticket"></i>
@@ -166,7 +166,6 @@ export default {
         try {
           const ticketData = { eventId: route.params.eventId }
           await ticketsService.buyTicket(ticketData)
-          this.activeEvent.capacity >= 0
         } catch (error) {
           Pop.error(error)
         }
