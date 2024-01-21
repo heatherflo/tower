@@ -27,9 +27,13 @@
         <div class="d-flex flex-column justify-content-end">
           <h4 class="mt-3">{{ activeEvent.capacity - activeEvent.ticketCount }} spots left</h4>
           <div v-if="isAttending">You are attending this event</div>
-          <button :disabled="isAttending" @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy Ticket
+          <div v-if="activeEvent.isCanceled" class="red">Event is Canceled</div>
+          <button :disabled="isAttending, activeEvent.isCanceled" @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy
+            Ticket
             <i><i class="mdi mdi-ticket"></i>
             </i></button>
+          <button @click="cancelEvent(event.id)" :disabled="account.id == event.creatorId" class="mt-2 p-3 btn red">Cancel
+            Event</button>
 
         </div>
       </div>
@@ -136,7 +140,7 @@ export default {
         Pop.error(error)
       }
     }
-    // TODO make cancel for events
+
 
     return {
       othersTickets: computed(() => AppState.othersTickets),
@@ -146,6 +150,7 @@ export default {
       getEventById,
       commentData,
       route,
+      account: computed(() => AppState.account),
       comments: computed(() => AppState.comments),
       activeEvent: computed(() => AppState.activeEvent),
       isAttending: computed(() => {
@@ -162,6 +167,16 @@ export default {
           Pop.error(error)
         }
       },
+      async cancelEvent(eventId) {
+        try {
+          if (await Pop.confirm('Are you sure?')) {
+            await eventsService.cancelEvent(eventId)
+            Pop.success('you canceled your event')
+          }
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
 
     };
   },
@@ -175,5 +190,9 @@ export default {
   height: 70px;
   width: 70px;
   border-radius: 50%;
+}
+
+.red {
+  color: red
 }
 </style>
