@@ -160,7 +160,7 @@ export default {
         const account = AppState.tickets.find(ticket => ticket.accountId == AppState.account.id)
         return account != undefined
       }),
-      // TODO reference mick's isCollaborator computed on PostIt to find out if logged-in user is attending an event
+
 
       async buyTicket() {
         try {

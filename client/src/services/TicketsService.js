@@ -26,10 +26,11 @@ class TicketsService {
     AppState.othersTickets = othersTickets
   }
 
-  async deleteMyTicket(ticketId) {
-    const response = await api.delete(`api/tickets/${ticketId}`)
+  async deleteMyTicket(myTicketId) {
+    const response = await api.delete(`api/tickets/${myTicketId}`)
     console.log('deleting ticket', response.data)
-    //TODO finish this so it saves in the appstate and then check for error again
+    const indexToRemove = AppState.myTickets.findIndex(myTicket => myTicket.id == myTicketId)
+    AppState.myTickets.splice(indexToRemove, 1)
   }
 }
 

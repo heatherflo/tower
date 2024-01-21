@@ -7,7 +7,7 @@
       </div>
       <div class="p-2 d-flex justify-content-between">
         {{ myTicket.event.location }}
-        <button @click="deleteMyTicket()" class=" btn-info btn"><i><i class="mdi mdi-delete"></i></i></button>
+        <button @click="deleteMyTicket(myTicket.id)" class=" btn-info btn"><i><i class="mdi mdi-delete"></i></i></button>
       </div>
       <!-- <div>
         {{ myTicket.startDate.toLocaleDateString('en-US', {
@@ -30,10 +30,10 @@ export default {
   props: { myTicket: { type: Ticket, required: true } },
 
   setup() {
-    async function deleteMyTicket(ticketId) {
+    async function deleteMyTicket(myTicketId) {
       try {
         if (await Pop.confirm('Are you sure?'))
-          await ticketsService.deleteMyTicket(ticketId)
+          await ticketsService.deleteMyTicket(myTicketId)
       } catch (error) {
         Pop.error(error)
       }

@@ -1,6 +1,7 @@
 import { dbContext } from "../db/DbContext.js"
 import { eventsService } from "./EventsService.js"
 import { BadRequest } from "../utils/Errors.js"
+import { Forbidden } from "../utils/Errors.js"
 
 class CommentsService {
 
@@ -20,10 +21,11 @@ class CommentsService {
     if (!commentToDelete) {
       throw new Error('Wait, there is no comment to delete')
     }
-    // // @ts-ignore
-    // if (commentToDelete.accountId = !userId) {
-    //   throw new Error("oops, you can't delete this comment cause you didn't make it")
-    // }
+    // @ts-ignore
+    if (commentToDelete.accountId != userId) {
+      throw new Forbidden('oops, you are not authorized to delete this')
+    }
+
     await commentToDelete.deleteOne()
     return 'comment was removed'
   }

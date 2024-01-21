@@ -24,12 +24,19 @@ class EventsService {
     }
     return event
   }
-  // TODO see what is wrong with this function to make my test work correctly in Postman- may be as a result of the fact that the other things are not passing first in postman
-  async editEventById(eventId, eventData) {
+
+  async editEventById(eventId, eventData, userId) {
 
     const originalEvent = await this.getEventById(eventId)
 
-    // TODO make sure event is not cancelled before editing
+    if (!originalEvent) {
+      throw new Error('This event does not exist')
+    }
+    if (originalEvent.creatorId != userId) {
+      throw new Forbidden('You cannot edit an event you did not create')
+    }
+    if (originalEvent.isCanceled)
+      throw new Forbidden('A canceled event cannot be edited')
 
     originalEvent.name = eventData.name ? eventData.name : originalEvent.name
     originalEvent.description = eventData.description ? eventData.description : originalEvent.description

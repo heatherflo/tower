@@ -61,7 +61,7 @@ export class EventsController extends BaseController {
       // reference delete album on backend for similar logic
       const userId = request.userInfo.id
       const eventData = request.body
-      const event = await eventsService.editEventById(eventId, eventData)
+      const event = await eventsService.editEventById(eventId, eventData, userId)
       response.send(event)
 
     } catch (error) {
