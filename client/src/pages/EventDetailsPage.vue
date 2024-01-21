@@ -3,7 +3,7 @@
     <section v-if="activeEvent" class="row">
 
       <div class="col-12 mt-2">
-        <!-- TODO if the event is cancelled, render some HTML here that tells us that -->
+
         <h2>{{ activeEvent.name }}</h2>
 
       </div>
@@ -25,14 +25,17 @@
           month: 'numeric', day: 'numeric', year: 'numeric'
         }) }}</h5>
         <div class="d-flex flex-column justify-content-end">
-          <h4 class="mt-3">{{ activeEvent.capacity - activeEvent.ticketCount }} spots left</h4>
+          <h4 v-if="!activeEvent.isCanceled" class="mt-3">{{ activeEvent.capacity - activeEvent.ticketCount }} spots left
+          </h4>
           <div v-if="isAttending">You are attending this event</div>
           <div v-if="activeEvent.isCanceled" class="red">Event is Canceled</div>
-          <button :disabled="isAttending, activeEvent.isCanceled" @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy
+          <button :disabled="isAttending || activeEvent.isCanceled || activeEvent.capacity == activeEvent.ticketCount"
+            @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy
             Ticket
             <i><i class="mdi mdi-ticket"></i>
             </i></button>
-          <button @click="cancelEvent(event.id)" :disabled="account.id == event.creatorId" class="mt-2 p-3 btn red">Cancel
+          <button @click="cancelEvent(activeEvent.id)" v-if="!activeEvent.isCanceled"
+            :disabled="account.id != activeEvent.creatorId" class="mt-2 p-3 btn btn-outline-danger red">Cancel
             Event</button>
 
         </div>
@@ -163,6 +166,7 @@ export default {
         try {
           const ticketData = { eventId: route.params.eventId }
           await ticketsService.buyTicket(ticketData)
+          this.activeEvent.capacity >= 0
         } catch (error) {
           Pop.error(error)
         }
@@ -178,7 +182,7 @@ export default {
         }
       }
 
-    };
+    }
   },
   components: { CommentCard }
 };
