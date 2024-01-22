@@ -28,6 +28,7 @@
           <h4 v-if="!activeEvent.isCanceled" class="mt-3">{{ activeEvent.capacity - activeEvent.ticketCount }} spots left
           </h4>
           <div v-if="isAttending">You are attending this event</div>
+          <div v-if="activeEvent.ticketCount >= activeEvent.capacity" class="red">Event is SOLD OUT</div>
           <div v-if="activeEvent.isCanceled" class="red">Event is Canceled</div>
           <button :disabled="isAttending || activeEvent.isCanceled || activeEvent.ticketCount >= activeEvent.capacity"
             @click="buyTicket()" class="mt-2 p-3 btn btn-info">Buy
