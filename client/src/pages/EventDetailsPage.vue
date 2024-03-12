@@ -21,7 +21,7 @@
           <h4>{{ activeEvent.location }}</h4>
         </div>
 
-        <h5> {{ activeEvent.startDate.toLocaleDateString('en-US', {
+        <h5 class="m-2"> {{ activeEvent.startDate.toLocaleDateString('en-US', {
           month: 'numeric', day: 'numeric', year: 'numeric'
         }) }}</h5>
         <div class="d-flex flex-column justify-content-end">

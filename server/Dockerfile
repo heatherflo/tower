@@ -17,7 +17,7 @@ COPY client ./
 RUN npm run build
 
 # Use a smaller base image for the final server image
-FROM node:20
+FROM node:20-slim
 
 # Set the working directory in the server container
 WORKDIR /app/server
