@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: heathermaejohnson/tower:latest
+    image: heathermjohnson/tower:latest
     restart: unless-stopped
     env_file:
       - tower-env
